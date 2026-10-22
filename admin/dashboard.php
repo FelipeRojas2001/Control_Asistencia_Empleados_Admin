@@ -27,17 +27,23 @@ $tarjetas = [
 ];
 include '_header.php';
 ?>
-<h3 class="mb-4">Dashboard</h3>
-<div class="row g-3">
-<?php foreach ($tarjetas as $t): ?>
-  <div class="col-12 col-sm-6 col-lg-4">
-    <div class="card border-<?= $t[2] ?>">
-      <div class="card-body">
-        <div class="text-muted"><?= e($t[0]) ?></div>
-        <div class="display-6"><?= (int)$t[1] ?></div>
+<!-- Encabezado de la sección -->
+<div class="mb-4">
+  <h3 class="fw-bold text-dark mb-1">Dashboard</h3>
+  <p class="text-muted small mb-0">Resumen general de la actividad y estadísticas del sistema</p>
+</div>
+
+<!-- Cuadrícula de tarjetas de estadísticas -->
+<div class="row g-4">
+  <?php foreach ($tarjetas as $t): ?>
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 border-start border-4 border-<?= $t[2] ?> py-2">
+        <div class="card-body px-4">
+          <div class="text-uppercase text-secondary fs-7 fw-semibold mb-1"><?= e($t[0]) ?></div>
+          <div class="display-6 fw-bold text-dark mb-0"><?= (int)$t[1] ?></div>
+        </div>
       </div>
     </div>
-  </div>
-<?php endforeach; ?>
+  <?php endforeach; ?>
 </div>
 <?php include '_footer.php'; ?>

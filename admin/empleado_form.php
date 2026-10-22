@@ -55,32 +55,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 include '_header.php';
 ?>
-<h3 class="mb-3"><?= $id ? 'Editar empleado' : 'Registrar empleado' ?></h3>
-<?php foreach ($errores as $er): ?><div class="alert alert-danger py-2"><?= e($er) ?></div><?php endforeach; ?>
-<form method="post" class="card card-body" style="max-width:600px">
-  <input type="hidden" name="csrf" value="<?= csrf_token() ?>">
-  <input type="hidden" name="id" value="<?= $id ?>">
-  <div class="mb-3"><label class="form-label">Cédula</label>
-    <input type="text" name="cedula" class="form-control" value="<?= e($emp['cedula']) ?>" required></div>
-  <div class="mb-3"><label class="form-label">Nombre completo</label>
-    <input type="text" name="nombre" class="form-control" value="<?= e($emp['nombre']) ?>" required></div>
-  <div class="mb-3"><label class="form-label">Correo</label>
-    <input type="email" name="correo" class="form-control" value="<?= e($emp['correo']) ?>" required></div>
-  <div class="mb-3"><label class="form-label">Teléfono</label>
-    <input type="text" name="telefono" class="form-control" value="<?= e($emp['telefono']) ?>" required></div>
-  <?php if ($id): ?>
-    <div class="mb-3"><label class="form-label">Código de acceso</label>
-      <input type="text" class="form-control" value="<?= e($emp['codigo_acceso']) ?>" readonly></div>
-    <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" name="estado" id="estado" <?= $emp['estado'] ? 'checked' : '' ?>>
-      <label class="form-check-label" for="estado">Activo</label>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    
+    <!-- Encabezado de la sección -->
+    <div class="mb-4">
+      <h3 class="fw-bold text-dark mb-1"><?= $id ? 'Editar empleado' : 'Registrar empleado' ?></h3>
+      <p class="text-muted small mb-0">Completa los campos necesarios para la gestión del personal</p>
     </div>
-  <?php else: ?>
-    <p class="text-muted">El código de acceso se genera automáticamente al guardar.</p>
-  <?php endif; ?>
-  <div>
-    <button class="btn btn-primary">Guardar</button>
-    <a href="empleados.php" class="btn btn-secondary">Cancelar</a>
+
+    <!-- Alertas de errores PHP originales -->
+    <?php foreach ($errores as $er): ?>
+      <div class="alert alert-danger border-0 shadow-sm rounded-4 py-2 px-3 mb-3 small">
+        <strong><?= e($er) ?></strong>
+      </div>
+    <?php endforeach; ?>
+
+    <!-- Tarjeta del formulario -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4">
+      <div class="card-body p-0">
+        
+        <form method="post" autocomplete="off">
+          <input type="hidden" name="csrf" value="<?= csrf_token() ?>">
+          <input type="hidden" name="id" value="<?= $id ?>">
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-secondary small">Cédula</label>
+            <input type="text" name="cedula" class="form-control form-control-lg fs-6 bg-light border-0" value="<?= e($emp['cedula']) ?>" placeholder="Ej. 12345678" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-secondary small">Nombre completo</label>
+            <input type="text" name="nombre" class="form-control form-control-lg fs-6 bg-light border-0" value="<?= e($emp['nombre']) ?>" placeholder="Ej. Juan Pérez" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-secondary small">Correo</label>
+            <input type="email" name="correo" class="form-control form-control-lg fs-6 bg-light border-0" value="<?= e($emp['correo']) ?>" placeholder="correo@ejemplo.com" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-secondary small">Teléfono</label>
+            <input type="text" name="telefono" class="form-control form-control-lg fs-6 bg-light border-0" value="<?= e($emp['telefono']) ?>" placeholder="Ej. 88888888" required>
+          </div>
+          
+          <?php if ($id): ?>
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary small">Código de acceso</label>
+              <input type="text" class="form-control form-control-lg fs-6 bg-light border-0 text-muted" value="<?= e($emp['codigo_acceso']) ?>" readonly>
+            </div>
+            
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" role="switch" name="estado" id="estado" <?= $emp['estado'] ? 'checked' : '' ?>>
+              <label class="form-check-label fw-semibold small text-secondary ms-2" for="estado">Empleado Activo</label>
+            </div>
+          <?php else: ?>
+            <div class="alert alert-light border-0 bg-light rounded-3 text-muted small mb-4">
+              💡 El código de acceso se generará automáticamente al guardar.
+            </div>
+          <?php endif; ?>
+          
+          <div class="d-flex gap-2 pt-2">
+            <button class="btn btn-dark fw-semibold px-4 py-2 shadow-sm">Guardar</button>
+            <a href="empleados.php" class="btn btn-light border fw-semibold px-4 py-2 text-secondary">Cancelar</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
   </div>
-</form>
+</div>
 <?php include '_footer.php'; ?>
